@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Talks 2025</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .search-container {
+      margin-top: 1rem;
+    }
+
+    #search {
+      width: 80%;
+      max-width: 400px;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #schedule-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    .talk {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+      padding: 1rem;
+    }
+
+    .talk h2 {
+      margin-top: 0;
+    }
+
+    .talk .time {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .talk .speakers {
+      font-style: italic;
+      margin-bottom: 0.5rem;
+    }
+
+    .talk .category {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .talk .category span {
+      background-color: #eee;
+      padding: 0.25rem 0.5rem;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tech Talks 2025</h1>
+    <div class="search-container">
+      <input type="text" id="search" placeholder="Search by category...">
+    </div>
+  </header>
+  <main id="schedule-container"></main>
+  <script>
+    const talksData = [
+      {
+        "title": "The Future of JavaScript",
+        "speakers": ["John Doe"],
+        "category": ["JavaScript", "Web Development"],
+        "duration": 60,
+        "description": "A deep dive into the new features of ECMAScript 2025 and what they mean for the future of web development.",
+        "startTime": "10:00"
+      },
+      {
+        "title": "Building Scalable APIs with Node.js",
+        "speakers": ["Jane Smith"],
+        "category": ["Node.js", "API", "Backend"],
+        "duration": 60,
+        "description": "Learn how to build robust and scalable APIs using Node.js, Express, and best practices for microservices architecture.",
+        "startTime": "11:10"
+      },
+      {
+        "title": "CSS Grid and Flexbox: A Deep Dive",
+        "speakers": ["Peter Jones", "Mary Johnson"],
+        "category": ["CSS", "Frontend"],
+        "duration": 60,
+        "description": "A comprehensive look at the power of CSS Grid and Flexbox for creating complex and responsive layouts.",
+        "startTime": "12:20"
+      },
+      {
+        "title": "Lunch Break",
+        "speakers": [],
+        "category": [],
+        "duration": 60,
+        "description": "Time to refuel and network with other attendees.",
+        "startTime": "13:30"
+      },
+      {
+        "title": "Introduction to Machine Learning with TensorFlow.js",
+        "speakers": ["David Lee"],
+        "category": ["Machine Learning", "TensorFlow", "JavaScript"],
+        "duration": 60,
+        "description": "Get started with machine learning in the browser with this introduction to TensorFlow.js.",
+        "startTime": "14:40"
+      },
+      {
+        "title": "State Management in React with Redux",
+        "speakers": ["Susan Williams"],
+        "category": ["React", "Redux", "State Management"],
+        "duration": 60,
+        "description": "An in-depth guide to managing application state in React using the Redux library.",
+        "startTime": "15:50"
+      },
+      {
+        "title": "The Rise of WebAssembly",
+        "speakers": ["Michael Brown"],
+        "category": ["WebAssembly", "Performance"],
+        "duration": 60,
+        "description": "Explore the world of WebAssembly and how it's changing the landscape of web development.",
+        "startTime": "17:00"
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const scheduleContainer = document.getElementById('schedule-container');
+      const searchInput = document.getElementById('search');
+
+      let talks = talksData;
+      renderSchedule(talks);
+
+      searchInput.addEventListener('input', () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredTalks = talks.filter(talk => {
+          if (talk.title === 'Lunch Break') return true;
+          return talk.category.some(category => category.toLowerCase().includes(searchTerm));
+        });
+        renderSchedule(filteredTalks);
+      });
+
+      function renderSchedule(talksToRender) {
+        scheduleContainer.innerHTML = '';
+        talksToRender.forEach(talk => {
+          const talkElement = document.createElement('div');
+          talkElement.classList.add('talk');
+
+          const time = document.createElement('div');
+          time.classList.add('time');
+          time.textContent = talk.startTime;
+          talkElement.appendChild(time);
+
+          const title = document.createElement('h2');
+          title.textContent = talk.title;
+          talkElement.appendChild(title);
+
+          if (talk.speakers.length > 0) {
+            const speakers = document.createElement('div');
+            speakers.classList.add('speakers');
+            speakers.textContent = `by ${talk.speakers.join(', ')}`;
+            talkElement.appendChild(speakers);
+          }
+
+          const description = document.createElement('p');
+          description.textContent = talk.description;
+          talkElement.appendChild(description);
+
+          if (talk.category.length > 0) {
+            const category = document.createElement('div');
+            category.classList.add('category');
+            talk.category.forEach(cat => {
+              const span = document.createElement('span');
+              span.textContent = cat;
+              category.appendChild(span);
+            });
+            talkElement.appendChild(category);
+          }
+
+          scheduleContainer.appendChild(talkElement);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
